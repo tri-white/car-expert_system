@@ -43,19 +43,5 @@ class DiagnosticRuleSeeder extends Seeder
 
         // Insert the data into the 'diagnostic_rules' table
         DB::table('diagnostic_rules')->insert($diagnosticRules);
-
-        // Create additional diagnostic rules
-        $symptoms = DB::table('symptoms')->get();
-        $malfunctions = DB::table('malfunctions')->get();
-
-        foreach ($malfunctions as $malfunction) {
-            // Create multiple diagnostic rules for each malfunction
-            for ($i = 0; $i < 3; $i++) {
-                DB::table('diagnostic_rules')->insert([
-                    'symptom_id' => $symptoms->random()->id,
-                    'malfunction_id' => $malfunction->id,
-                ]);
-            }
-        }
     }
 }
