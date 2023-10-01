@@ -7,5 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Symptom extends Model
 {
-    use HasFactory;
+    public function diagnosticRules()
+    {
+        return $this->belongsToMany('App\DiagnosticRule');
+    }
 }

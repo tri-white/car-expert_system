@@ -7,5 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class DiagnosticRule extends Model
 {
-    use HasFactory;
+    public function symptom()
+    {
+        return $this->belongsTo('App\Symptom');
+    }
+
+    public function malfunction()
+    {
+        return $this->belongsTo('App\Malfunction');
+    }
 }
