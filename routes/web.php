@@ -19,3 +19,5 @@ Route::get('/', function () {
 
 Route::get('/diagnose', 'DiagnosticController@index')->name('diagnose');
 Route::post('/diagnose', 'DiagnosticController@diagnose');
+
+Route::get('/results', 'DiagnosticController@results')->name('results');
