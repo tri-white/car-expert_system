@@ -3,20 +3,20 @@
 
 @section('content')
 <div class="container">
-    <h1>Vehicle Symptom Diagnosis</h1>
+    <h1>Діагностика автомобіля</h1>
     <form method="post" action="{{ route('diagnose') }}">
         @csrf
-        <p>Do you have the following symptom:</p>
+        <p>Чи помічали ви наступне:</p>
         <p>"{{ $randomSymptom }}"</p>
         <input type="hidden" name="symptom_id" value="{{ $symptomId }}">
         <label>
-            <input type="radio" name="answer" value="yes"> Yes
+            <input type="radio" name="answer" value="yes"> Так
         </label>
         <label>
-            <input type="radio" name="answer" value="no"> No
+            <input type="radio" name="answer" value="no"> Ні
         </label>
         <label>
-            <input type="radio" name="answer" value="unknown"> I don't know
+            <input type="radio" name="answer" value="unknown"> Не знаю
         </label>
         <button type="submit">Next</button>
     </form>
