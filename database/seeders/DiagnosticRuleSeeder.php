@@ -7,41 +7,59 @@ use Illuminate\Database\Seeder;
 
 class DiagnosticRuleSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run()
     {
-        // Sample diagnostic rules data
         $diagnosticRules = [
-            [
-                'symptom_id' => DB::table('symptoms')->where('name', 'Двигун шумить')->value('id'),
-                'malfunction_id' => DB::table('malfunctions')->where('name', 'Несправність двигуна')->value('id'),
-            ],
             [
                 'symptom_id' => DB::table('symptoms')->where('name', 'Двигун перенагрівається')->value('id'),
                 'malfunction_id' => DB::table('malfunctions')->where('name', 'Витікання охолоджуючої рідини')->value('id'),
             ],
             [
                 'symptom_id' => DB::table('symptoms')->where('name', 'Втрата потужності')->value('id'),
+                'malfunction_id' => DB::table('malfunctions')->where('name', 'Витікання охолоджуючої рідини')->value('id'),
+            ],
+            [
+                'symptom_id' => DB::table('symptoms')->where('name', 'Надмірні вихлопні гази')->value('id'),
+                'malfunction_id' => DB::table('malfunctions')->where('name', 'Витікання охолоджуючої рідини')->value('id'),
+            ],
+            [
+                'symptom_id' => DB::table('symptoms')->where('name', 'Втрата потужності')->value('id'),
                 'malfunction_id' => DB::table('malfunctions')->where('name', 'Проскальзування коробки передач')->value('id'),
             ],
-            // Add more diagnostic rules based on symptoms and malfunctions
-
-            // Example of a malfunction with multiple symptoms
             [
-                'symptom_id' => DB::table('symptoms')->where('name', 'Двигун шумить')->value('id'),
+                'symptom_id' => DB::table('symptoms')->where('name', 'Втрата потужності')->value('id'),
                 'malfunction_id' => DB::table('malfunctions')->where('name', 'Низький тиск масла')->value('id'),
             ],
             [
-                'symptom_id' => DB::table('symptoms')->where('name', 'Втрата мастила')->value('id'),
+                'symptom_id' => DB::table('symptoms')->where('name', 'Надмірні вихлопні гази')->value('id'),
                 'malfunction_id' => DB::table('malfunctions')->where('name', 'Низький тиск масла')->value('id'),
             ],
-            // Add more malfunctions with multiple symptoms
+            [
+                'symptom_id' => DB::table('symptoms')->where('name', 'Автомобіль не заводиться')->value('id'),
+                'malfunction_id' => DB::table('malfunctions')->where('name', 'Несправність генератора')->value('id'),
+            ],
+            [
+                'symptom_id' => DB::table('symptoms')->where('name', 'Дивний звук')->value('id'),
+                'malfunction_id' => DB::table('malfunctions')->where('name', 'Несправність генератора')->value('id'),
+            ],
+            [
+                'symptom_id' => DB::table('symptoms')->where('name', 'Горить індикатор двигуна')->value('id'),
+                'malfunction_id' => DB::table('malfunctions')->where('name', 'Несправність двигуна')->value('id'),
+            ],
+            [
+                'symptom_id' => DB::table('symptoms')->where('name', 'Дивний звук')->value('id'),
+                'malfunction_id' => DB::table('malfunctions')->where('name', 'Несправність двигуна')->value('id'),
+            ],
+            [
+                'symptom_id' => DB::table('symptoms')->where('name', 'Надмірні вихлопні гази')->value('id'),
+                'malfunction_id' => DB::table('malfunctions')->where('name', 'Несправність двигуна')->value('id'),
+            ],
+            [
+                'symptom_id' => DB::table('symptoms')->where('name', 'Втрата потужності')->value('id'),
+                'malfunction_id' => DB::table('malfunctions')->where('name', 'Несправність двигуна')->value('id'),
+            ],
 
         ];
-
-        // Insert the data into the 'diagnostic_rules' table
         DB::table('diagnostic_rules')->insert($diagnosticRules);
     }
 }

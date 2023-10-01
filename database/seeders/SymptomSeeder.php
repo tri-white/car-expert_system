@@ -20,6 +20,9 @@ class SymptomSeeder extends Seeder
             ['name' => 'Надмірні вихлопні гази'],
             ['name' => 'Двигун глохне'],
             ['name' => 'Втрата мастила'],
+            ['name' => 'Автомобіль не заводиться'],
+            ['name' => 'Дивний звук'],
+            ['name' => 'Горить індикатор двигуна'],
         ];
 
         // Insert the data into the 'symptoms' table
