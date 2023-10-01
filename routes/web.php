@@ -15,9 +15,11 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('welcome');
 
 Route::get('/diagnose', 'DiagnosticController@index')->name('diagnose');
 Route::post('/diagnose', 'DiagnosticController@diagnose');
 
 Route::get('/results', 'DiagnosticController@results')->name('results');
+
+Route::get('/configure', 'ConfigureController@index')->name('configure');
