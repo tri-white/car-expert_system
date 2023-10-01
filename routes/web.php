@@ -16,5 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/diagnose', 'DiagnosticController@index');
+
+Route::get('/diagnose', 'DiagnosticController@index')->name('diagnose');
 Route::post('/diagnose', 'DiagnosticController@diagnose');
