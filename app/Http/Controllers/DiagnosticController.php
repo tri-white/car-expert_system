@@ -2,73 +2,88 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 use App\Models\Symptom;
 use App\Models\Malfunction;
 use App\Models\DiagnosticRule;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class DiagnosticController extends Controller
 {
+    private $filteredMalfunctions;
+    private $askedSymptoms;
+
     public function index()
     {
-        $randomSymptom = Symptom::inRandomOrder()->first();
+        // Initialize an empty list of malfunctions
+        $this->filteredMalfunctions = Malfunction::all();
+        $this->askedSymptoms = [];
 
-        return view('diagnose', [
-            'randomSymptom' => $randomSymptom->name,
-            'symptomId' => $randomSymptom->id,
-        ]);
+        // Start diagnosing with a random symptom
+        return $this->diagnoseRandomSymptom();
     }
-    
+
     public function diagnose(Request $request)
     {
         $answer = $request->input('answer');
         $symptomId = $request->input('symptom_id');
-    
-        // Initialize an empty list of malfunctions
-        $filteredMalfunctions = Malfunction::all();
-    
+
+        // Update asked symptoms list
+        $this->askedSymptoms[] = $symptomId;
+
         // Filter malfunctions based on the user's answer
         if ($answer === 'yes') {
-            // Remove malfunctions that don't have the selected symptom
-            $filteredMalfunctions = $this->filterMalfunctionsBySymptom($filteredMalfunctions, $symptomId);
+            $this->filterMalfunctionsBySymptom($symptomId);
         } elseif ($answer === 'no') {
-            // Remove malfunctions that have the selected symptom
-            $filteredMalfunctions = $this->filterMalfunctionsWithoutSymptom($filteredMalfunctions, $symptomId);
+            $this->filterMalfunctionsWithoutSymptom($symptomId);
         }
-    
-        // Check if there are more questions to ask
+
         if ($this->areMoreQuestionsToAsk()) {
-            // Get a new random symptom
-            $randomSymptom = Symptom::inRandomOrder()->first();
-    
+            // Continue diagnosing with the next random symptom
+            return $this->diagnoseRandomSymptom();
+        } else {
+            // Display the final results with the filtered malfunctions
+            return view('results', ['filteredMalfunctions' => $this->filteredMalfunctions]);
+        }
+    }
+
+    private function diagnoseRandomSymptom()
+    {
+        // Get a new random symptom that hasn't been asked yet
+        $randomSymptom = Symptom::whereNotIn('id', $this->askedSymptoms)
+            ->inRandomOrder()
+            ->first();
+
+        if ($randomSymptom) {
             // Pass the random symptom data to the view
             return view('diagnose', [
                 'randomSymptom' => $randomSymptom->name,
                 'symptomId' => $randomSymptom->id,
             ]);
         } else {
-            // Display the final results with the filtered malfunctions
-            return view('results', ['filteredMalfunctions' => $filteredMalfunctions]);
+            // No more symptoms to ask, display the final results
+            return view('results', ['filteredMalfunctions' => $this->filteredMalfunctions]);
         }
     }
-    
-    private function filterMalfunctionsBySymptom($malfunctions, $symptomId)
+
+    private function filterMalfunctionsBySymptom($symptomId)
     {
-        return $malfunctions->filter(function ($malfunction) use ($symptomId) {
+        $this->filteredMalfunctions = $this->filteredMalfunctions->filter(function ($malfunction) use ($symptomId) {
             return $malfunction->symptoms->contains('id', $symptomId);
         });
     }
-    
-    private function filterMalfunctionsWithoutSymptom($malfunctions, $symptomId)
+
+    private function filterMalfunctionsWithoutSymptom($symptomId)
     {
-        return $malfunctions->filter(function ($malfunction) use ($symptomId) {
+        $this->filteredMalfunctions = $this->filteredMalfunctions->filter(function ($malfunction) use ($symptomId) {
             return !$malfunction->symptoms->contains('id', $symptomId);
         });
     }
-    
+
     private function areMoreQuestionsToAsk()
     {
-        
+        // Check if there are more symptoms to ask based on askedSymptoms
+        $remainingSymptoms = Symptom::whereNotIn('id', $this->askedSymptoms)->count();
+        return $remainingSymptoms > 0;
     }
 }
