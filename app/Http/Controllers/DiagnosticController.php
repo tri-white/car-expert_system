@@ -1,76 +1,106 @@
 <?php
 
 namespace App\Http\Controllers;
-
-use App\Models\Symptom;
-use App\Models\Malfunction;
-use App\Models\DiagnosticRule;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
+use App\Models\Malfunction;
+use App\Models\Symptom;
+use App\Models\DiagnosticRule;
 
 class DiagnosticController extends Controller
 {
+    private $filteredMalfunctions;
+    private $askedSymptoms;
+
     public function index()
     {
-        // Get a random symptom from the database
-        $randomSymptom = Symptom::inRandomOrder()->first();
-        \Log::info(json_encode($randomSymptom));
-        // Pass the random symptom data to the view
-        return view('diagnose', [
-            'randomSymptom' => $randomSymptom->name,
-            'symptomId' => $randomSymptom->id,
-        ]);
+        // Initialize an empty list of malfunctions
+        $this->filteredMalfunctions = Malfunction::all();
+        $this->askedSymptoms = [];
+        \Log::info($this->filteredMalfunctions);
+
+        // Start diagnosing with the most common symptom
+        return $this->diagnoseMostCommonSymptom();
     }
-    
+
     public function diagnose(Request $request)
     {
         $answer = $request->input('answer');
         $symptomId = $request->input('symptom_id');
-    
-        // Initialize an empty list of malfunctions
-        $filteredMalfunctions = Malfunction::all();
-    
+
+        // Update asked symptoms list
+        $this->askedSymptoms[] = $symptomId;
+
         // Filter malfunctions based on the user's answer
         if ($answer === 'yes') {
-            // Remove malfunctions that don't have the selected symptom
-            $filteredMalfunctions = $this->filterMalfunctionsBySymptom($filteredMalfunctions, $symptomId);
+            $this->filterMalfunctionsBySymptom($symptomId);
         } elseif ($answer === 'no') {
-            // Remove malfunctions that have the selected symptom
-            $filteredMalfunctions = $this->filterMalfunctionsWithoutSymptom($filteredMalfunctions, $symptomId);
+            $this->filterMalfunctionsWithoutSymptom($symptomId);
         }
-    
-        // Check if there are more questions to ask
+
         if ($this->areMoreQuestionsToAsk()) {
-            // Get a new random symptom
-            $randomSymptom = Symptom::inRandomOrder()->first();
-    
-            // Pass the random symptom data to the view
-            return view('diagnose', [
-                'randomSymptom' => $randomSymptom->name,
-                'symptomId' => $randomSymptom->id,
-            ]);
+            // Continue diagnosing with the most common symptom among remaining malfunctions
+            return $this->diagnoseMostCommonSymptom();
         } else {
             // Display the final results with the filtered malfunctions
-            return view('results', ['filteredMalfunctions' => $filteredMalfunctions]);
+            return view('results', ['filteredMalfunctions' => $this->filteredMalfunctions]);
         }
     }
-    
-    private function filterMalfunctionsBySymptom($malfunctions, $symptomId)
+
+    private function diagnoseMostCommonSymptom()
     {
-        return $malfunctions->filter(function ($malfunction) use ($symptomId) {
-            return $malfunction->symptoms->contains('id', $symptomId);
+        // Find the symptom that is most common among remaining malfunctions
+        $mostCommonSymptom = $this->findMostCommonSymptom();
+
+        if ($mostCommonSymptom) {
+            // Ask the user about the most common symptom
+            return view('diagnose', ['symptom' => $mostCommonSymptom]);
+        } else {
+            // No more common symptoms, display results
+            return view('results', ['filteredMalfunctions' => $this->filteredMalfunctions]);
+        }
+    }
+
+    private function findMostCommonSymptom()
+    {
+        $malfunctionsIds = $this->filteredMalfunctions->pluck('id')->toArray();
+
+        // Get a list of symptoms that are associated with remaining malfunctions
+        $commonSymptoms = DiagnosticRule::whereIn('malfunction_id', $malfunctionsIds)
+            ->groupBy('symptom_id')
+            ->selectRaw('symptom_id, COUNT(*) as count')
+            ->orderByDesc('count')
+            ->get();
+
+        // Find the most common symptom
+        foreach ($commonSymptoms as $commonSymptom) {
+            if (!in_array($commonSymptom->symptom_id, $this->askedSymptoms)) {
+                return Symptom::find($commonSymptom->symptom_id);
+            }
+        }
+
+        return null;
+    }
+
+    private function filterMalfunctionsBySymptom($symptomId)
+    {
+        // Filter malfunctions to keep only those with the specified symptom
+        $this->filteredMalfunctions = $this->filteredMalfunctions->filter(function ($malfunction) use ($symptomId) {
+            return $malfunction->hasSymptom($symptomId);
         });
     }
-    
-    private function filterMalfunctionsWithoutSymptom($malfunctions, $symptomId)
+
+    private function filterMalfunctionsWithoutSymptom($symptomId)
     {
-        return $malfunctions->filter(function ($malfunction) use ($symptomId) {
-            return !$malfunction->symptoms->contains('id', $symptomId);
+        // Filter malfunctions to remove those with the specified symptom
+        $this->filteredMalfunctions = $this->filteredMalfunctions->filter(function ($malfunction) use ($symptomId) {
+            return !$malfunction->hasSymptom($symptomId);
         });
     }
-    
+
     private function areMoreQuestionsToAsk()
     {
-        
+        // Check if there are more common symptoms to ask about
+        return $this->findMostCommonSymptom() !== null;
     }
 }
