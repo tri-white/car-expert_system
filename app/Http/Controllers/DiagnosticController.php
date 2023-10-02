@@ -33,7 +33,7 @@ class DiagnosticController extends Controller
 
         if ($this->areMoreQuestionsToAsk()) {
             $mostCommonSymptom = $this->findMostCommonSymptom();
-            \Log::info($this->askedSymptoms);
+            array_push($this->askedSymptoms, $mostCommonSymptom->id);
             return view('diagnose', ['symptom' => $mostCommonSymptom, 
             'malfunctions'=>$this->filteredMalfunctions, 
             'askedSymptoms'=> $this->askedSymptoms]);
@@ -47,7 +47,7 @@ class DiagnosticController extends Controller
         $mostCommonSymptom = $this->findMostCommonSymptom();
 
         if ($mostCommonSymptom) {
-            array_push($this->askedSymptoms, $mostCommonSymptom);
+            array_push($this->askedSymptoms, $mostCommonSymptom->id);
             return view('diagnose', ['symptom' => $mostCommonSymptom, 
             'malfunctions'=>$this->filteredMalfunctions, 
             'askedSymptoms'=> $this->askedSymptoms]);
@@ -65,6 +65,8 @@ class DiagnosticController extends Controller
             ->selectRaw('symptom_id, COUNT(*) as count')
             ->orderByDesc('count')
             ->get();
+
+        \Log::info($this->askedSymptoms);
 
         foreach ($commonSymptoms as $commonSymptom) {
             if (!in_array($commonSymptom->symptom_id, $this->askedSymptoms)) {
@@ -86,14 +88,11 @@ class DiagnosticController extends Controller
                     unset($this->filteredMalfunctions[$malfunction]);
                 }
             }
-
-            // Re-index the array after removing elements
             $this->filteredMalfunctions = array_values($this->filteredMalfunctions);
         }
 
 private function filterMalfunctionsWithoutSymptom($symptomId)
 {
-    // Create an array of malfunction IDs that never appear in the DiagnosticRule table with $symptomId
     $toRemove = DiagnosticRule::whereNotIn('malfunction_id', function ($query) use ($symptomId) {
         $query->select('malfunction_id')
             ->from('diagnostic_rules')
@@ -105,8 +104,6 @@ private function filterMalfunctionsWithoutSymptom($symptomId)
             unset($this->filteredMalfunctions[$malfunction]);
         }
     }
-
-    // Re-index the array after removing elements
     $this->filteredMalfunctions = array_values($this->filteredMalfunctions);
 }
 
