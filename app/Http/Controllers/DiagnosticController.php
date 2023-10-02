@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Symptom;
-use App\Malfunction;
-use App\DiagnosticRule;
+use App\Models\Symptom;
+use App\Models\Malfunction;
+use App\Models\DiagnosticRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -14,7 +14,7 @@ class DiagnosticController extends Controller
     {
         // Get a random symptom from the database
         $randomSymptom = Symptom::inRandomOrder()->first();
-    
+        \Log::info(json_encode($randomSymptom));
         // Pass the random symptom data to the view
         return view('diagnose', [
             'randomSymptom' => $randomSymptom->name,
@@ -71,8 +71,6 @@ class DiagnosticController extends Controller
     
     private function areMoreQuestionsToAsk()
     {
-        // Implement your logic to determine if there are more questions to ask
-        // For example, you can check if there are more symptoms or diagnostic rules to apply
-        // Return true if there are more questions, false otherwise
+        
     }
 }

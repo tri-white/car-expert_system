@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\DiagnosticController;
+use App\Http\Controllers\ConfigureController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,9 +19,9 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
-Route::get('/diagnose', 'DiagnosticController@index')->name('diagnose');
-Route::post('/diagnose', 'DiagnosticController@diagnose');
+Route::get('/diagnose', [DiagnosticController::class, 'index'])->name('diagnose');
+Route::post('/diagnose', [DiagnosticController::class, 'diagnose']);
 
-Route::get('/results', 'DiagnosticController@results')->name('results');
+Route::get('/results', [DiagnosticController::class, 'results'])->name('results');
 
-Route::get('/configure', 'ConfigureController@index')->name('configure');
+Route::get('/configure', [ConfigureController::class, 'index'])->name('configure');

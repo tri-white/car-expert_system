@@ -4,6 +4,9 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class SymptomSeeder extends Seeder
 {
@@ -27,5 +30,6 @@ class SymptomSeeder extends Seeder
 
         // Insert the data into the 'symptoms' table
         DB::table('symptoms')->insert($symptoms);
+        
     }
 }
