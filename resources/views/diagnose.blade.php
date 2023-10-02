@@ -2,11 +2,13 @@
 
 @section('content')
 <div class="container">
-    <h1>Діагностика автомобіля</h1>
+<a href="{{ route('welcome') }}">
+        <h1>Діагностика автомобіля</h1>
+    </a>
     <form method="post" action="{{ route('diagnose') }}">
         @csrf
-        <p>Чи помічали ви наступне:</p>
-        <p>"{{ $symptom->name }}"</p>
+        <p>Чи помічали ви наступний симптом:</p>
+        <p>{{ $symptom->name }}</p>
         <input type="hidden" name="symptom_id" value="{{ $symptom->id }}">
         <label>
             <input type="radio" name="answer" value="yes"> Так

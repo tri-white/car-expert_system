@@ -17,6 +17,7 @@ class DiagnosticController extends Controller
         // Initialize an empty list of malfunctions
         $this->filteredMalfunctions = Malfunction::all();
         $this->askedSymptoms = [];
+        \Log::info($this->filteredMalfunctions);
 
         // Start diagnosing with the most common symptom
         return $this->diagnoseMostCommonSymptom();
