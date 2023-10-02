@@ -73,20 +73,20 @@ class DiagnosticController extends Controller
     }
 
     private function filterMalfunctionsBySymptom($symptomId)
-{
-    $toRemove = DiagnosticRule::where('symptom_id', $symptomId)
-        ->pluck('malfunction_id')
-        ->toArray();
+        {
+            $toRemove = DiagnosticRule::where('symptom_id', $symptomId)
+                ->pluck('malfunction_id')
+                ->toArray();
 
-    foreach ($this->filteredMalfunctions as $key => $malfunction) {
-        if (!in_array($malfunction->id, $toRemove)) {
-            unset($this->filteredMalfunctions[$key]);
+            foreach ($this->filteredMalfunctions as $malfunction) {
+                if (!in_array($malfunction, $toRemove)) {
+                    unset($this->filteredMalfunctions[$malfunction]);
+                }
+            }
+
+            // Re-index the array after removing elements
+            $this->filteredMalfunctions = array_values($this->filteredMalfunctions);
         }
-    }
-
-    // Re-index the array after removing elements
-    $this->filteredMalfunctions = array_values($this->filteredMalfunctions);
-}
 
 private function filterMalfunctionsWithoutSymptom($symptomId)
 {
@@ -97,9 +97,9 @@ private function filterMalfunctionsWithoutSymptom($symptomId)
             ->where('symptom_id', $symptomId);
     })->pluck('malfunction_id')->toArray();
 
-    foreach ($this->filteredMalfunctions as $key => $malfunction) {
-        if (in_array($malfunction->id, $toRemove)) {
-            unset($this->filteredMalfunctions[$key]);
+    foreach ($this->filteredMalfunctions as $malfunction) {
+        if (in_array($malfunction, $toRemove)) {
+            unset($this->filteredMalfunctions[$malfunction]);
         }
     }
 
