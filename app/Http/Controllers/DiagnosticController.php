@@ -12,10 +12,8 @@ class DiagnosticController extends Controller
 {
     public function index()
     {
-        // Get a random symptom from the database
         $randomSymptom = Symptom::inRandomOrder()->first();
-        \Log::info(json_encode($randomSymptom));
-        // Pass the random symptom data to the view
+
         return view('diagnose', [
             'randomSymptom' => $randomSymptom->name,
             'symptomId' => $randomSymptom->id,

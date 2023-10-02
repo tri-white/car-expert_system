@@ -11,14 +11,14 @@
         <input type="hidden" name="symptom_id" value="{{ $symptomId }}">
         <label>
             <input type="radio" name="answer" value="yes"> Так
-        </label>
+        </label><br>
         <label>
             <input type="radio" name="answer" value="no"> Ні
-        </label>
+        </label><br>
         <label>
             <input type="radio" name="answer" value="unknown"> Не знаю
-        </label>
-        <button type="submit">Next</button>
+        </label><br>
+        <button type="submit" class="button-primary">Next</button>
     </form>
 </div>
 @endsection
