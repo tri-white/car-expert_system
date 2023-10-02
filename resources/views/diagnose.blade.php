@@ -1,4 +1,3 @@
-
 @extends('layout')
 
 @section('content')
@@ -7,8 +6,8 @@
     <form method="post" action="{{ route('diagnose') }}">
         @csrf
         <p>Чи помічали ви наступне:</p>
-        <p>"{{ $randomSymptom }}"</p>
-        <input type="hidden" name="symptom_id" value="{{ $symptomId }}">
+        <p>"{{ $symptom->name }}"</p>
+        <input type="hidden" name="symptom_id" value="{{ $symptom->id }}">
         <label>
             <input type="radio" name="answer" value="yes"> Так
         </label><br>
