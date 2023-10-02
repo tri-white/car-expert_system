@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-<a href="{{ route('welcome') }}">
+    <a href="{{ route('welcome') }}">
         <h1>Діагностика автомобіля</h1>
     </a>
     <form method="post" action="{{ route('diagnose') }}">
@@ -10,6 +10,15 @@
         <p>Чи помічали ви наступний симптом:</p>
         <p>{{ $symptom->name }}</p>
         <input type="hidden" name="symptom_id" value="{{ $symptom->id }}">
+        
+        @foreach($malfunctions as $malfunction)
+            <input type="hidden" name="malfunctions[]" value="{{ $malfunction->id }}">
+        @endforeach
+        
+        @foreach($askedSymptoms as $askedSymptom)
+            <input type="hidden" name="askedSymptoms[]" value="{{ $askedSymptom->id }}">
+        @endforeach
+
         <label>
             <input type="radio" name="answer" value="yes"> Так
         </label><br>
