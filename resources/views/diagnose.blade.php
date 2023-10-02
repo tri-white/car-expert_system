@@ -12,11 +12,11 @@
         <input type="hidden" name="symptom_id" value="{{ $symptom->id }}">
         
         @foreach($malfunctions as $malfunction)
-            <input type="hidden" name="malfunctions[]" value="{{ $malfunction->id }}">
+            <input type="hidden" name="malfunctions[]" value="{{ $malfunction }}">
         @endforeach
         
         @foreach($askedSymptoms as $askedSymptom)
-            <input type="hidden" name="askedSymptoms[]" value="{{ $askedSymptom->id }}">
+            <input type="hidden" name="askedSymptoms[]" value="{{ $askedSymptom }}">
         @endforeach
 
         <label>

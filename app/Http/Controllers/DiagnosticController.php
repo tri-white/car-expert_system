@@ -14,8 +14,7 @@ class DiagnosticController extends Controller
 
     public function index()
     {
-        $this->filteredMalfunctions = Malfunction::all();
-
+        $this->filteredMalfunctions = Malfunction::pluck('id')->toArray();
         return $this->diagnoseMostCommonSymptom();
     }
 
@@ -33,7 +32,11 @@ class DiagnosticController extends Controller
         }
 
         if ($this->areMoreQuestionsToAsk()) {
-            return $this->diagnoseMostCommonSymptom();
+            $mostCommonSymptom = $this->findMostCommonSymptom();
+            \Log::info($this->askedSymptoms);
+            return view('diagnose', ['symptom' => $mostCommonSymptom, 
+            'malfunctions'=>$this->filteredMalfunctions, 
+            'askedSymptoms'=> $this->askedSymptoms]);
         } else {
             return view('results', ['filteredMalfunctions' => $this->filteredMalfunctions]);
         }
@@ -55,7 +58,7 @@ class DiagnosticController extends Controller
 
     private function findMostCommonSymptom()
     {
-        $malfunctionsIds = $this->filteredMalfunctions->pluck('id')->toArray();
+        $malfunctionsIds = $this->filteredMalfunctions;
 
         $commonSymptoms = DiagnosticRule::whereIn('malfunction_id', $malfunctionsIds)
             ->groupBy('symptom_id')
