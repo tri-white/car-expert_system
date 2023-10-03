@@ -11,4 +11,8 @@ class Malfunction extends Model
     {
         return $this->belongsToMany('App\DiagnosticRule');
     }
+    public function symptoms()
+{
+    return $this->belongsToMany(Symptom::class, 'diagnostic_rules', 'malfunction_id', 'symptom_id');
+}
 }
