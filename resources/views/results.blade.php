@@ -14,9 +14,15 @@
                 @foreach ($filteredMalfunctions as $malfunctionId)
                     @php
                         $malfunction = \App\Models\Malfunction::find($malfunctionId);
+                        $malfunctionSymptoms = $malfunction->symptoms;
                     @endphp
                     <li>{{ $malfunction->name }}</li>
                     <p>{{ $malfunction->description }}</p>
+                    <ul>
+                        @foreach ($malfunctionSymptoms as $symptom)
+                            <li>{{ $symptom->name }}</li>
+                        @endforeach
+                    </ul>
                 @endforeach
             </ul>
         </div>
