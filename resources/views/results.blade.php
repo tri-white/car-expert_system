@@ -16,7 +16,7 @@
                         $malfunction = \App\Models\Malfunction::find($malfunctionId);
                         $malfunctionSymptoms = $malfunction->symptoms;
                     @endphp
-                    <li>{{ $malfunction->name }}</li>
+                    <li class="mt-3">{{ $malfunction->name }}</li>
                     <p>{{ $malfunction->description }}</p>
                     <ul>
                         @foreach ($malfunctionSymptoms as $symptom)
