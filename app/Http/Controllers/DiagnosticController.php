@@ -27,6 +27,7 @@ class DiagnosticController extends Controller
         $this->filteredMalfunctions = $request->input('malfunctions');
         $this->askedSymptoms = $request->input('askedSymptoms');
 
+        \Log::info($this->filteredMalfunctions);
         if ($answer === 'yes') {
             // Якщо у користувача є симптом - видаляємо всі несправності, у яких цього симптому немає
             $this->filterMalfunctionsBySymptom($symptomId);
@@ -34,7 +35,7 @@ class DiagnosticController extends Controller
             // Якщо у користувача немає цього симптому - видаляємо всі несправності, у яких цей симптом є
             $this->filterMalfunctionsWithoutSymptom($symptomId);
         }
-
+        \Log::info($this->filteredMalfunctions);
         // Якщо є ще симптоми, про які потрібно запитати користувача, щоб дістати достовірний результат - продовжуємо діалог
         if ($this->areMoreQuestionsToAsk()) {
             $mostCommonSymptom = $this->findMostCommonSymptom();
@@ -92,10 +93,14 @@ class DiagnosticController extends Controller
                 ->pluck('malfunction_id')
                 ->toArray();
 
-            // Видаляємо зі списку можливих несправностей всі несправності, які не мають заданий симптом
+            // Видаляємо зі списку можливих несправностей, всі несправності в яких не було заданого симптому
             foreach ($this->filteredMalfunctions as $malfunction) {
                 if (!in_array($malfunction, $toRemove)) {
-                    unset($this->filteredMalfunctions[$malfunction]);
+                    $key = array_search($malfunction, $this->filteredMalfunctions);
+
+                    if ($key !== false) {
+                        unset($this->filteredMalfunctions[$key]);
+                    }
                 }
             }
             $this->filteredMalfunctions = array_values($this->filteredMalfunctions);
@@ -112,8 +117,12 @@ private function filterMalfunctionsWithoutSymptom($symptomId)
 
     // Видаляємо зі списку можливих несправностей всі несправності, які не мають заданий симптом
     foreach ($this->filteredMalfunctions as $malfunction) {
-        if (in_array($malfunction, $toRemove)) {
-            unset($this->filteredMalfunctions[$malfunction]);
+        if (!in_array($malfunction, $toRemove)) {
+            $key = array_search($malfunction, $this->filteredMalfunctions);
+
+            if ($key !== false) {
+                unset($this->filteredMalfunctions[$key]);
+            }
         }
     }
     $this->filteredMalfunctions = array_values($this->filteredMalfunctions);
