@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1>Редагувати Малфункцію</h1>
+    <h1 class="text-center">Редагування несправності</h1>
 
     @if (session('success'))
         <div class="alert alert-success">
@@ -28,7 +28,7 @@
                 @endforeach
             </select>
         </div>
-        <button type="submit" class="btn btn-primary">Зберегти зміни</button>
+        <button type="submit" class="mt-2 btn btn-primary">Зберегти зміни</button>
     </form>
 </div>
 @endsection

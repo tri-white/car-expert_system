@@ -1,14 +1,11 @@
 @extends('layout')
 
 @section('content')
-<div class="container">
-    <a href="{{ route('welcome') }}">
-        <h1>Діагностика автомобіля</h1>
-    </a>
+<div class="container text-center">
     <form method="post" action="{{ route('diagnose') }}">
         @csrf
-        <p>Чи помічали ви наступний симптом:</p>
-        <p>{{ $symptom->name }}</p>
+        <p class="my-3 fs-5 font-weight-light">Чи помічали ви наступний симптом:</p>
+        <p class="my-0 mb-4 h3">{{ $symptom->name }}</p>
         <input type="hidden" name="symptom_id" value="{{ $symptom->id }}">
         
         @foreach($malfunctions as $malfunction)
@@ -19,16 +16,19 @@
             <input type="hidden" name="askedSymptoms[]" value="{{ $askedSymptom }}">
         @endforeach
 
-        <label>
-            <input type="radio" name="answer" value="yes"> Так
-        </label><br>
-        <label>
-            <input type="radio" name="answer" value="no"> Ні
-        </label><br>
-        <label>
-            <input type="radio" name="answer" value="unknown"> Не знаю
-        </label><br>
-        <button type="submit" class="button-primary">Next</button>
+        <div class="mt-4">
+            <label class="h6">
+                <input type="radio" name="answer" value="yes"> Так
+            </label><br>
+            <label class="h6">
+                <input type="radio" name="answer" value="no"> Ні
+            </label><br>
+            <label class="h6">
+                <input type="radio" name="answer" value="unknown"> Не знаю
+            </label><br>
+        </div>
+
+        <button type="submit" class="btn btn-primary mt-4">Далі</button>
     </form>
 </div>
 @endsection

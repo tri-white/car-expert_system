@@ -2,9 +2,8 @@
 
 @section('content')
 <div class="container">
-    <h1>Симптоми</h1>
+    <h1 class="mt-5 mx-auto px-auto text-center">Симптоми</h1>
 
-    <!-- Add New Symptom Form -->
     <form method="post" action="{{ route('add-symptom') }}">
         @csrf
         <div class="form-group">
@@ -16,9 +15,8 @@
 
     <hr>
 
-    <!-- Existing Symptoms Table -->
     <h2>Існуючі симптоми</h2>
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Назва симптома</th>

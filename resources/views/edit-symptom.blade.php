@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <h1>Редагування симптому</h1>
+    <h1 class="text-center">Редагування симптому</h1>
     <form method="POST" action="{{ route('update-symptom', ['id' => $symptom->id]) }}">
         @csrf
 
@@ -21,7 +21,7 @@
             </div>
         @endif
 
-        <button type="submit" class="btn btn-primary">Зберегти зміни</button>
+        <button type="submit" class="mt-2 btn btn-primary">Зберегти зміни</button>
     </form>
 </div>
 @endsection

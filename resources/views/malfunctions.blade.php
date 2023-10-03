@@ -2,9 +2,8 @@
 
 @section('content')
 <div class="container">
-    <h1>Малфункції</h1>
-    <!-- Add Malfunction Form -->
-    <h2>Додати Малфункцію</h2>
+    <h1 class="mb-4 text-center">Несправності</h1>
+    <h2>Додати несправність</h2>
     <form method="post" action="{{ route('add-malfunction') }}">
         @csrf
         <div class="form-group">
@@ -26,16 +25,25 @@
         <button type="submit" class="btn btn-primary">Додати несправність</button>
     </form>
 
-    <!-- List of Malfunctions -->
-    <h2>Список несправностей</h2>
-    <ul>
-        @foreach ($malfunctions as $malfunction)
-            <li>
-                {{ $malfunction->name }}
-                <a href="{{ route('edit-malfunction', $malfunction->id) }}" class="btn btn-sm btn-warning">Редагувати</a>
-                <a href="{{ route('destroy-malfunction', $malfunction->id) }}"  class="btn btn-danger" onclick="return confirm('Ви впевнені?')">Видалити</a>
-            </li>
-        @endforeach
-    </ul>
+    <h2 class="mt-4">Список несправностей</h2>
+    <table class="table  table-striped">
+        <thead>
+            <tr>
+                <th>Назва несправності</th>
+                <th>Дії</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach ($malfunctions as $malfunction)
+            <tr>
+                <td>{{ $malfunction->name }}</td>
+                <td>
+                    <a href="{{ route('edit-malfunction', $malfunction->id) }}" class="btn btn-warning">Редагувати</a>
+                    <a href="{{ route('destroy-malfunction', $malfunction->id) }}" class="btn btn-danger" onclick="return confirm('Ви впевнені?')">Видалити</a>
+                </td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
 </div>
 @endsection
