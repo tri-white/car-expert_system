@@ -12,3 +12,7 @@ Allows to diagnose problems with user's car via dialogue, where user is asked ab
 
 ![image](https://github.com/tri-white/car-expert_system/assets/92664974/ba62082e-6185-41a7-bfdb-a5e7aeea113d)
 
+# Installation
+
+Make sure you have set correct DB config in .env, then run migrations and now you can run the project with php artisan serve
+
