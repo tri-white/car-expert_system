@@ -1,11 +1,10 @@
-@extends('layouts.app')
+@extends('layout')
 
 @section('content')
 <div class="container">
     <h1>Редагування симптому</h1>
     <form method="POST" action="{{ route('update-symptom', ['id' => $symptom->id]) }}">
         @csrf
-        @method('PUT')
 
         <div class="form-group">
             <label for="symptomName">Назва симптому</label>

@@ -41,5 +41,5 @@ Route::delete('/malfunctions/{malfunction}', [MalfunctionsController::class, 'de
 Route::get('/symptoms', [SymptomsController::class, 'index'])->name('symptoms');
 Route::post('/symptoms/add', [SymptomsController::class, 'add'])->name('add-symptom');
 Route::get('/symptoms/edit/{id}', [SymptomsController::class, 'edit'])->name('edit-symptom');
-Route::post('/symptoms/update/{id}', [SymptomsController::class, 'edit'])->name('update-symptom');
+Route::post('/symptoms/update/{id}', [SymptomsController::class, 'update'])->name('update-symptom');
 Route::get('/symptoms/delete/{id}', [SymptomsController::class, 'destroy'])->name('delete-symptom');
