@@ -10,12 +10,8 @@ use Illuminate\Support\Str;
 
 class SymptomSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
-        // Sample symptoms data
         $symptoms = [
             ['name' => 'Двигун шумить'],
             ['name' => 'Двигун перенагрівається'],
@@ -27,9 +23,6 @@ class SymptomSeeder extends Seeder
             ['name' => 'Дивний звук'],
             ['name' => 'Горить індикатор двигуна'],
         ];
-
-        // Insert the data into the 'symptoms' table
         DB::table('symptoms')->insert($symptoms);
-        
     }
 }

@@ -1,8 +1,9 @@
-
 @extends('layout')
 
 @section('content')
-<a href="{{ route('welcome') }}"> <!-- Add this anchor tag -->
-        <h1>Діагностика автомобіля</h1>
-    </a>
+<div class="container">
+    <h1>Діагностика автомобіля</h1>
+    <a href="{{ route('symptoms') }}" class="btn btn-primary">Симптом</a>
+    <a href="{{ route('malfunctions') }}" class="btn btn-success">Несправності</a>
+</div>
 @endsection

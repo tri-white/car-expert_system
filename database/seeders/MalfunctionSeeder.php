@@ -10,9 +10,6 @@ use Illuminate\Support\Str;
 
 class MalfunctionSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
     public function run(): void
     {
         $malfunctions = [
@@ -22,7 +19,6 @@ class MalfunctionSeeder extends Seeder
             ['name' => 'Проскальзування коробки передач', 'description' => 'Передачі коробки передач проскальзовують під час руху.'],
             ['name' => 'Низький тиск масла', 'description' => 'Низький рівень тиску масла в системі.'],
         ];
-
         DB::table('malfunctions')->insert($malfunctions);;
     }
 }
