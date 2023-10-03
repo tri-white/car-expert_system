@@ -117,7 +117,7 @@ private function filterMalfunctionsWithoutSymptom($symptomId)
 
     // Видаляємо зі списку можливих несправностей всі несправності, які не мають заданий симптом
     foreach ($this->filteredMalfunctions as $malfunction) {
-        if (in_array($malfunction, $toRemove)) {
+        if (!in_array($malfunction, $toRemove)) {
             $key = array_search($malfunction, $this->filteredMalfunctions);
 
             if ($key !== false) {
