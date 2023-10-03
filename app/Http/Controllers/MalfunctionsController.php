@@ -71,6 +71,6 @@ public function update(Request $request, $id)
         $malfunction = Malfunction::find($id);
         $malfunction->delete();
 
-        return redirect()->route('malfunctions')->with('success', 'Malfunction deleted successfully.');
+        return redirect()->route('malfunctions');
     }
 }
