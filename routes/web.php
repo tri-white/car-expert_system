@@ -25,3 +25,11 @@ Route::post('/diagnose', [DiagnosticController::class, 'diagnose']);
 Route::get('/results', [DiagnosticController::class, 'results'])->name('results');
 
 Route::get('/configure', [ConfigureController::class, 'index'])->name('configure');
+
+Route::get('/symptoms', [ConfigureController::class, 'symptoms'])->name('symptoms');
+Route::get('/malfunctions', [ConfigureController::class, 'malfunctions'])->name('malfunctions');
+
+Route::post('/symptoms/add', 'SymptomController@store')->name('add-symptom');
+Route::get('/symptoms/edit/{id}', 'SymptomController@edit')->name('edit-symptom');
+Route::post('/symptoms/update/{id}', 'SymptomController@update')->name('update-symptom');
+Route::get('/symptoms/delete/{id}', 'SymptomController@destroy')->name('delete-symptom');
