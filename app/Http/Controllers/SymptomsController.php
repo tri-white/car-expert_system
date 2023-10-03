@@ -11,7 +11,7 @@ class SymptomsController extends Controller
         $symptoms = Symptom::all();
         return view('symptoms', compact('symptoms'));
     }
-    public function store(Request $request)
+    public function add(Request $request)
     {
         $request->validate([
             'symptomName' => 'required|string|max:255',
@@ -21,7 +21,7 @@ class SymptomsController extends Controller
         $symptom->name = $request->input('symptomName');
         $symptom->save();
 
-        return redirect()->route('symptoms')->with('success', 'Симптом додано успішно.');
+        return redirect()->route('symptoms');
     }
 
     public function edit($id)
@@ -40,7 +40,7 @@ class SymptomsController extends Controller
         $symptom->name = $request->input('symptomName');
         $symptom->save();
 
-        return redirect()->route('symptoms')->with('success', 'Симптом відредаговано успішно.');
+        return redirect()->route('symptoms');
     }
 
     public function destroy($id)
@@ -48,6 +48,6 @@ class SymptomsController extends Controller
         $symptom = Symptom::find($id);
         $symptom->delete();
 
-        return redirect()->route('symptoms')->with('success', 'Симптом видалено успішно.');
+        return redirect()->route('symptoms');
     }
 }
