@@ -26,10 +26,16 @@ Route::get('/results', [DiagnosticController::class, 'results'])->name('results'
 
 Route::get('/configure', [ConfigureController::class, 'index'])->name('configure');
 
-Route::get('/symptoms', [ConfigureController::class, 'symptoms'])->name('symptoms');
-Route::get('/malfunctions', [ConfigureController::class, 'malfunctions'])->name('malfunctions');
 
-Route::post('/symptoms/add', [ConfigureController::class, 'storeSymptom'])->name('add-symptom');
-Route::get('/symptoms/edit/{id}', [ConfigureController::class, 'editSymptom'])->name('edit-symptom');
-Route::post('/symptoms/update/{id}', [ConfigureController::class, 'editSymptom'])->name('update-symptom');
-Route::get('/symptoms/delete/{id}', [ConfigureController::class, 'destroySymptom'])->name('delete-symptom');
+Route::get('/malfunctions', [MalfunctionController::class, 'index'])->name('malfunctions.index');
+Route::get('/malfunctions/create', [MalfunctionController::class, 'create'])->name('malfunctions.create');
+Route::post('/malfunctions', [MalfunctionController::class, 'store'])->name('malfunctions.store');
+Route::get('/malfunctions/{malfunction}/edit', [MalfunctionController::class, 'edit'])->name('malfunctions.edit');
+Route::put('/malfunctions/{malfunction}', [MalfunctionController::class, 'update'])->name('malfunctions.update');
+Route::delete('/malfunctions/{malfunction}', [MalfunctionController::class, 'destroy'])->name('malfunctions.destroy');
+
+Route::get('/symptoms', [SymptomsController::class, 'index'])->name('symptoms');
+Route::post('/symptoms/add', [SymptomsController::class, 'store'])->name('add-symptom');
+Route::get('/symptoms/edit/{id}', [SymptomsController::class, 'edit'])->name('edit-symptom');
+Route::post('/symptoms/update/{id}', [SymptomsController::class, 'edit'])->name('update-symptom');
+Route::get('/symptoms/delete/{id}', [SymptomsController::class, 'destroy'])->name('delete-symptom');
