@@ -19,7 +19,6 @@ class MalfunctionSeeder extends Seeder
             ['name' => 'Проскальзування коробки передач', 'description' => 'Передачі коробки передач проскальзовують під час руху.'],
             ['name' => 'Низький тиск масла', 'description' => 'Низький рівень тиску масла в системі.'],
         ];
-
         DB::table('malfunctions')->insert($malfunctions);;
     }
 }

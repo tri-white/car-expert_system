@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Models\DiagnosticRule;
 use Illuminate\Http\Request;
+use App\Models\Symptom;
+use App\Models\Malfunction;
 
 class ConfigureController extends Controller
 {
@@ -55,5 +57,4 @@ class ConfigureController extends Controller
 
         return redirect()->route('symptoms')->with('success', 'Симптом видалено успішно.');
     }
-
 }

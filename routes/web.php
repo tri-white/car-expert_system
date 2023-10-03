@@ -32,4 +32,4 @@ Route::get('/malfunctions', [ConfigureController::class, 'malfunctions'])->name(
 Route::post('/symptoms/add', [ConfigureController::class, 'storeSymptom'])->name('add-symptom');
 Route::get('/symptoms/edit/{id}', [ConfigureController::class, 'editSymptom'])->name('edit-symptom');
 Route::post('/symptoms/update/{id}', [ConfigureController::class, 'editSymptom'])->name('update-symptom');
-Route::get('/symptoms/delete/{id}', [ConfigureController::class, 'destorySymptom'])->name('delete-symptom');
+Route::get('/symptoms/delete/{id}', [ConfigureController::class, 'destroySymptom'])->name('delete-symptom');

@@ -13,11 +13,20 @@ return new class extends Migration
     {
         Schema::create('diagnostic_rules', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('symptom_id');
             $table->unsignedBigInteger('malfunction_id');
-            
-            $table->foreign('symptom_id')->references('id')->on('symptoms');
-            $table->foreign('malfunction_id')->references('id')->on('malfunctions');
+            $table->unsignedBigInteger('symptom_id');
+    
+            $table->foreign('malfunction_id')
+                ->references('id')
+                ->on('malfunctions')
+                ->onDelete('cascade'); // Cascade delete when related Malfunction is deleted
+    
+            $table->foreign('symptom_id')
+                ->references('id')
+                ->on('symptoms')
+                ->onDelete('cascade'); // Cascade delete when related Symptom is deleted
+    
+            $table->timestamps();
         });
     }
 
