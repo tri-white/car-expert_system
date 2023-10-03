@@ -29,13 +29,13 @@ class ConfigureController extends Controller
         return redirect()->route('symptoms')->with('success', 'Симптом додано успішно.');
     }
 
-    public function edit($id)
+    public function editSymptom($id)
     {
         $symptom = Symptom::find($id);
         return view('edit-symptom', compact('symptom'));
     }
 
-    public function update(Request $request, $id)
+    public function updateSymptom(Request $request, $id)
     {
         $request->validate([
             'symptomName' => 'required|string|max:255',
@@ -48,7 +48,7 @@ class ConfigureController extends Controller
         return redirect()->route('symptoms')->with('success', 'Симптом відредаговано успішно.');
     }
 
-    public function destroy($id)
+    public function destroySymptom($id)
     {
         $symptom = Symptom::find($id);
         $symptom->delete();
