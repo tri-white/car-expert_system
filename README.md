@@ -6,7 +6,7 @@ Allows to diagnose problems with user's car via dialogue, where user is asked ab
 
 ![image](https://github.com/tri-white/car-expert_system/assets/92664974/07b18448-9ef8-4c32-90eb-963813b40eb2)
 
-![image](https://github.com/tri-white/car-expert_system/assets/92664974/50fc4662-f655-43ec-a6a3-ea7974a67955)
+![image](https://github.com/tri-white/car-expert_system/assets/92664974/1a7f7408-b662-431e-973c-076199b6446f)
 
 ![image](https://github.com/tri-white/car-expert_system/assets/92664974/7cd88d05-eb0b-413b-9ece-2ddc1c7562b2)
 
