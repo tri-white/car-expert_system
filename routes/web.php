@@ -3,6 +3,10 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\DiagnosticController;
 use App\Http\Controllers\ConfigureController;
+use App\Http\Controllers\MalfunctionsController;
+use App\Http\Controllers\SymptomsController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -27,12 +31,12 @@ Route::get('/results', [DiagnosticController::class, 'results'])->name('results'
 Route::get('/configure', [ConfigureController::class, 'index'])->name('configure');
 
 
-Route::get('/malfunctions', [MalfunctionController::class, 'index'])->name('malfunctions.index');
-Route::get('/malfunctions/create', [MalfunctionController::class, 'create'])->name('malfunctions.create');
-Route::post('/malfunctions', [MalfunctionController::class, 'store'])->name('malfunctions.store');
-Route::get('/malfunctions/{malfunction}/edit', [MalfunctionController::class, 'edit'])->name('malfunctions.edit');
-Route::put('/malfunctions/{malfunction}', [MalfunctionController::class, 'update'])->name('malfunctions.update');
-Route::delete('/malfunctions/{malfunction}', [MalfunctionController::class, 'destroy'])->name('malfunctions.destroy');
+Route::get('/malfunctions', [MalfunctionsController::class, 'index'])->name('malfunctions');
+Route::get('/malfunctions/create', [MalfunctionsController::class, 'create'])->name('malfunctions.create');
+Route::post('/malfunctions', [MalfunctionsController::class, 'store'])->name('malfunctions.store');
+Route::get('/malfunctions/{malfunction}/edit', [MalfunctionsController::class, 'edit'])->name('malfunctions.edit');
+Route::put('/malfunctions/{malfunction}', [MalfunctionsController::class, 'update'])->name('malfunctions.update');
+Route::delete('/malfunctions/{malfunction}', [MalfunctionsController::class, 'destroy'])->name('malfunctions.destroy');
 
 Route::get('/symptoms', [SymptomsController::class, 'index'])->name('symptoms');
 Route::post('/symptoms/add', [SymptomsController::class, 'store'])->name('add-symptom');
