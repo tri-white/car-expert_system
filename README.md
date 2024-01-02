@@ -14,5 +14,9 @@ Allows to diagnose problems with user's car via dialogue, where user is asked ab
 
 # Installation
 
-Make sure you have set correct DB config in .env, then run migrations and now you can run the project with php artisan serve
+1. composer install
+2. config .env
+3. php artisan key:generate
+4. php artisan migrate
+5. php artisan serve
 
